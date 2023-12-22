@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import fetchData from "../utility/fetchData";
 
-const BookingVehicleDetail = (props) => {
+const SingleCar = (props) => {
 	const [vehicle, setVehicle] = useState([])
 
 	useEffect(() => {
@@ -46,4 +46,4 @@ const BookingVehicleDetail = (props) => {
 	);
 };
 
-export default BookingVehicleDetail;
+export default SingleCar;
