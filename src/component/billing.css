@@ -1,0 +1,60 @@
+/* billing.css */
+
+.bill {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Add space between divs */
+  .bill > div {
+    margin-bottom: 15px;
+  }
+  
+  /* Style for label and input fields */
+  label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  input[type="date"],
+  input[type="number"],
+  select,
+  input[type="checkbox"] {
+    flex: 1; /* Take up remaining space */
+    margin-left: 10px; /* Adjust as needed */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style for itemized charges */
+  h3 {
+    margin-bottom: 10px;
+  }
+  
+  /* Style for payment button */
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Add other styling as needed */
+  

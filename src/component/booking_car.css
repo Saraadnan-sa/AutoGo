@@ -1,0 +1,62 @@
+/* VehicleDetail.css */
+
+.vehicle-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+}
+
+.image_vehicle {
+  background-image: url(../car.png);
+  background-size: cover;
+  height: 20vh;
+  width: 20vw;
+  background-color: black;
+}
+
+
+
+p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.availability {
+  color: green;
+}
+
+.unavailability {
+  color: red;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  /* Adjust as needed */
+}
+
+.label-container label {
+  margin-right: 10px;
+  /* Adjust as needed */
+}
+
+.date-input-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.date-input-container label {
+  margin-right: 10px;
+}
+
+.button_space {
+  margin-top: 10px;
+}

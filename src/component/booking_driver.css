@@ -1,0 +1,56 @@
+/* VehicleDetail.css */
+
+.driver-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #333;
+}
+
+.image_driver {
+  background-image: url(../image.png);
+  background-size:cover;
+  height: 150px;
+  width: 150px;
+  background-color: black;
+  float: right; /* Move the picture to the right */
+  margin-left: 10px; /* Add some space between the text and the image */
+}
+
+p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.availability {
+  color: green;
+}
+
+.unavailability {
+  color: red;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  /* Adjust as needed */
+}
+
+label {
+  margin-right: 10px;
+  /* Adjust as needed */
+}
+
+.button_space {
+  margin-top: 10px;
+}

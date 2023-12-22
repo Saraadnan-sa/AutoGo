@@ -1,0 +1,23 @@
+
+.Homepage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This ensures the container takes the full height of the viewport */
+  }
+.button{
+    width: 80vw;
+    height: 22vh;
+    background-color: rgb(161, 230, 223);
+    font-size: x-large;
+}
+.button:hover{
+    background-color: rgb(196, 233, 229);
+}
+
+.btn-div{
+    margin-bottom: 5px;
+}
+
+  
