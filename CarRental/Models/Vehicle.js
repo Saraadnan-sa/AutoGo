@@ -7,6 +7,12 @@ const vehicleSchema = new Schema({
         required: true
     }, 
 
+	image: 
+	{
+		type: String, 
+		required: true
+	}, 
+	
     renter: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'renter'
