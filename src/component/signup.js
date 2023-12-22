@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SignupForm() {
+function Signup() {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -137,4 +137,4 @@ function SignupForm() {
   );
 }
 
-export default SignupForm;
+export default Signup;

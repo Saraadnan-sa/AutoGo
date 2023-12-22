@@ -3,7 +3,7 @@ import fetchData from '../utility/fetchData';
 import CarCard from "./CarCard";
 import { useState } from "react";
 
-const Cards_car = () => {
+const CarListings = () => {
 	const [cars, setCars] = useState([]);
 	useEffect(() => {
 		const response = fetchData('/listing/getListings', {
@@ -19,4 +19,4 @@ const Cards_car = () => {
 	);
 };
 
-export default Cards_car;
+export default CarListings;
