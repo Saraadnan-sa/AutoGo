@@ -3,9 +3,12 @@ const Vehicle = require('../Models/Vehicle')
 const Renter = require('../Models/Renter')
 const Booked = require('../Models/Booked')
 const verifyToken = require('../Middleware/verifyToken')
+const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const router = express.Router(); 
 
-router.use(verifyToken); 
+const JWT_SECRET = "car_rental"; 
 
 router.post('/signup', [
     body('email').isEmail(),
@@ -37,7 +40,7 @@ router.post('/signup', [
                 password: (await securedPassword).toString(),
                 email: req.body.email, 
                 address: req.body.address, 
-                phoneNumber: req.body.number, 
+                phoneNumber: req.body.phoneNumber, 
                 cnic: req.body.cnic, 
                 age: req.body.age
             })
@@ -53,8 +56,10 @@ router.post('/signup', [
             id: renter.id
         }
 
+		console.log(req.renter); 
+
         const token = jwt.sign(data, JWT_SECRET, {expiresIn: '1h'}); 
-        req.body['token'] = token; 
+        req.headers['token'] = token; 
         res.json({token});
     }
     catch(error)
@@ -103,8 +108,11 @@ router.post('/login', [
             id: renter.id
         }
 
+		console.log(req.renter.id); 
+
         const token = jwt.sign(data, JWT_SECRET, {expiresIn: '1h'}); 
-        req.body['token'] = token; 
+        req.headers['token'] = token; 
+		console.log(req.headers); 
         res.json({token});
     }
     catch(error)
@@ -112,6 +120,8 @@ router.post('/login', [
         res.status(500).send("Internal error occured"); 
     }
 })
+
+router.use(verifyToken); 
 
 router.get('/getBookings', async(req, res)=> 
 {
@@ -121,8 +131,8 @@ router.get('/getBookings', async(req, res)=>
 })
 
 router.get('/getListingsRenter', async(req, res)=>{ //particular user
-
-    const listings = await Vehicle.find({owner: req.Renter.id});
+	console.log(req.renter); 
+    const listings = await Vehicle.find({owner: req.renter.id});
     res.json(listings);
 })
 
