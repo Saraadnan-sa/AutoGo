@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './billing.css';
 
-const BillingPage = () => {
+const Billing = () => {
   // State for rental details and options
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -99,4 +99,4 @@ const BillingPage = () => {
   );
 };
 
-export default BillingPage;
+export default Billing;

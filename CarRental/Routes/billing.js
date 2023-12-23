@@ -1,63 +1,62 @@
 const express = require('express')
 const Billing = require('../Models/Billing')
-const router = express.Router(); 
+const router = express.Router();
 
-router.post('/createBill', async(req, res)=> {
-    const {renter, rentee, driver, bill_driver, bill_renter, paymentStaus} = req.body; 
-    const bill = await Billing.create({ 
-        renter, rentee, driver, bill_driver, bill_renter, paymentStaus 
-    }); 
-    res.json(bill); 
+router.post('/createBill', async (req, res) => {
+	const { renter, rentee, driver, bill_driver, bill_renter, paymentStaus } = req.body;
+	const bill = await Billing.create({
+		renter, rentee, driver, bill_driver, bill_renter, paymentStaus
+	});
+	res.json(bill);
 })
 
-router.put('/updateBill/:id', async(req, res)=> {
+// router.put('/updateBill/:id', async (req, res) => {
 
-    try{
-        const {id} = req.params; 
-        const {paymentStaus} = req.body; 
-        const updatedBill = await Billing.findByIdAndUpdate(id, {paymentStaus})
-        res.json(updatedBill); 
-    }
+// 	try {
+// 		const { id } = req.params;
+// 		const { paymentStaus } = req.body;
+// 		const updatedBill = await Billing.findByIdAndUpdate(id, { paymentStaus })
+// 		res.json(updatedBill);
+// 	}
 
-    catch(error)
-    {
-        res.status(500).json({error: error.message})
-    }
+// 	catch (error) {
+// 		res.status(500).json({ error: error.message })
+// 	}
 
-})
+// })
 
-router.get('/getBillsRentee', async (req, res) => {
-    
-    const { rentee_id } = req.body;
+router.get('/getBillsRentee/:id', async (req, res) => {
 
-    try {
-        const bills = await Billing.find({ rentee: rentee_id });
-        res.json(bills);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+	const { id } = req.params;
+
+	try {
+		const bills = await Billing.find({ rentee: id });
+		res.json(bills);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
 
-router.get('/getBillsRenter', async (req, res) => {
-    const { renter_id } = req.body;
+router.get('/getBillsRenter/:id', async (req, res) => {
+	const { id } = req.params;
 
-    try {
-        const bills = await Billing.find({ renter: renter_id });
-        res.json(bills);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+	try {
+		const bills = await Billing.find({ renter: id });
+		res.json(bills);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
 
-router.get('/getBillsRenter', async (req, res) => {
-    const { renter_id } = req.body;
+router.get('/getBillsDriver/:id', async (req, res) => {
+	const { id } = req.params;
 
-    try {
-        const bills = await Billing.find({ renter: renter_id });
-        res.json(bills);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+	try {
+		const bills = await Billing.find({ driver: id });
+		res.json(bills);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
 
 module.exports = router; 
