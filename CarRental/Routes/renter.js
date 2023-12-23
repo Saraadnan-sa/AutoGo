@@ -27,9 +27,6 @@ router.post('/signup', [
             return res.status(400).send("Email already exists");
         }
         
-        // creating a hashed password for data security (hashing is done to encrypt a password)
-
-        // first creating a salt (salt is something that is added to the password for further security purpose)
 
         const salt = await bcrypt.genSalt(10); // 10 here is default thing 
         const securedPassword = bcrypt.hash(req.body.password, salt);         

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Booked = require('../Models/Booked')
 const Rentee = require('../Models/Rentee')
 const bcrypt = require('bcryptjs'); 
 const session = require('express-session')
@@ -50,11 +51,6 @@ router.post('/signup', [
             }
         }
 
-        req.rentee = 
-        {
-            id: rentee.id
-        }
-
         const token = jwt.sign(data, JWT_SECRET, {expiresIn: '1h'}); 
         req.body['token'] = token; 
         res.json({token});
@@ -95,14 +91,9 @@ router.post('/login', [
         }
 
         const data = {
-            user: {
+            rentee: {
                 id: rentee.id
             }
-        }
-
-        req.rentee = 
-        {
-            id: rentee.id
         }
 
         const token = jwt.sign(data, JWT_SECRET, {expiresIn: '1h'}); 
@@ -113,6 +104,13 @@ router.post('/login', [
     {
         res.status(500).send("Internal error occured"); 
     }
+})
+
+router.get('/fetchBookings', async(req, res)=> 
+{
+	const id = req.rentee.id; 
+    const bookings = await Booked.find({rentee: id}); 
+    res.json(bookings)
 })
 
 module.exports = router; 
