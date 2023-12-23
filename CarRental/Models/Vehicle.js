@@ -10,7 +10,7 @@ const vehicleSchema = new Schema({
 	image: 
 	{
 		type: String, 
-		required: true
+		default: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNbRNCwoaYFPDyP83Kx2ErWXolEu3xOQDVsA&usqp=CAU'
 	}, 
 	
     renter: {
