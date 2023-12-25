@@ -22,7 +22,7 @@ const bookedSchema = new Schema({
 		ref: 'driver'
 	},
 
-	startDate:{
+	startDate: {
 		type: String,
 		required: true
 	},
@@ -33,8 +33,13 @@ const bookedSchema = new Schema({
 	},
 
 	bill: {
-		type: mongoose.Schema.Types.ObjectId, 
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'billing'
+	},
+
+	date: {
+		type: Date,
+		default: Date.now  // Set the default value to the current date and time
 	}
 })
 

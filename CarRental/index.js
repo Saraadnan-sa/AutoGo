@@ -4,6 +4,7 @@ const connectDB = require('./Utility/connectDb')
 const renteeRouter = require('./Routes/rentee')
 const vehicleRouter = require('./Routes/vehicle')
 const renterRouter = require('./Routes/renter'); 
+const billingRouter = require('./Routes/billing'); 
 
 const app = express()
 const PORT = 5000; 
@@ -19,6 +20,7 @@ app.get('/', (req, res)=>{
 app.use('/rentee', renteeRouter)
 app.use('/vehicle', vehicleRouter)
 app.use('/renter', renterRouter)
+app.use('/billing', billingRouter)
 
 app.listen(PORT, ()=>{
     console.log(`server running on port ${PORT}`); 
