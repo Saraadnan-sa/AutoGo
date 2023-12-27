@@ -19,22 +19,22 @@ code {
 {
   width: 100vw;
   height: fit-content;
+  min-height: 100vh;
 }
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
   font-family:"Poppins",sans-serif;
-  
 }
 body{
   display:flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url("../public/cra2.png") no-repeat;
-  
+  background-image: url('../public/cra2.png');
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
 }
 .wrapper{
@@ -135,4 +135,9 @@ body{
 
 .register-link p a:hover{
   text-decoration:underline;
+}
+
+.navbar 
+{
+  background-color: transparent !important;
 }

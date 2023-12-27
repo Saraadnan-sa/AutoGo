@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CarCard = (props) => {
 	return (
-		<div className="card mb-3 mx-auto" style={{ maxWidth: "70%" }}>
+		<div className="card mb-3 mx-auto" style={{ maxWidth: "70%", border: '2px solid black', borderRadius: '10px' }}>
 			<div className="row g-0">
 				<div className="col-md-4">
 					<img
@@ -18,9 +19,9 @@ const CarCard = (props) => {
 							<li>Mileage: {props.mileage}km</li>
 							<li>Rate: {props.rate} per Hour</li>
 						</ul>
-						<button type="button" className="btn btn-secondary">
+						<Link type="button" className="btn btn-primary" to='/'>
 							Read More
-						</button>
+						</Link>
 					</div>
 				</div>
 			</div>

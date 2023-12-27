@@ -145,12 +145,12 @@ router.put('/updatelisting/:id', async(req, res)=>{
 })
 
 router.post('/addlisting', async(req, res)=>{
-    const {name, availability, model, make, engineCapacity, mileage, region, rent, driver, car_number, duration} = req.body; 
+    const {name, availability, model, make, engineCapacity, mileage, region, rentperhour, driver, car_number, duration, withPetrol} = req.body; 
 
     const renter = req.renter.id; 
 
     const listing = await Vehicle.create({
-        name, renter, availability, model, make, engineCapacity, mileage, region, rent, driver, car_number, duration
+        name, renter, availability, model, make, engineCapacity, mileage, region, rentperhour, driver, car_number, duration, withPetrol
     })
 
     res.json(listing);
