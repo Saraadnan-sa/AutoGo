@@ -17,10 +17,5 @@ router.delete('/removebooking/:id', async(req, res)=>{
     res.json(booking);
 })
 
-router.get('/fetchBooking', async(req, res)=> 
-{
-    const bookings = await Booked.find(); 
-    res.json(Booked)
-})
 
 module.exports = router; 

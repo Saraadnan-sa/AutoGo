@@ -7,6 +7,12 @@ const vehicleSchema = new Schema({
         required: true
     }, 
 
+	image: 
+	{
+		type: String, 
+		default: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNbRNCwoaYFPDyP83Kx2ErWXolEu3xOQDVsA&usqp=CAU'
+	}, 
+	
     renter: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'renter'

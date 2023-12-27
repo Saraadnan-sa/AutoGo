@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+<<<<<<< HEAD
 function SignupForm() {
     const [formData, setFormData] = useState({
       name: "",
@@ -24,6 +25,34 @@ function SignupForm() {
       console.log(formData);
     };
  
+=======
+
+function Signup() {
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+    email: "",
+    address: "",
+    phoneNumber: "",
+    cnic: "",
+    age: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission, you can send formData to your backend or perform any other action.
+    console.log(formData);
+  };
+
+>>>>>>> origin/main
   return (
     <div className="wrapper">
       <form action="">
@@ -132,4 +161,8 @@ Signup
 );
 }
 
+<<<<<<< HEAD
 export default SignupForm;
+=======
+export default Signup;
+>>>>>>> origin/main

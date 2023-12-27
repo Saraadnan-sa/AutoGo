@@ -1,9 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 const connectDB = require('./Utility/connectDb')
-const userRouter = require('./Routes/user')
-const listingRouter = require('./Routes/listing')
-const ownerRouter = require('./Routes/owner'); 
+const renteeRouter = require('./Routes/rentee')
+const vehicleRouter = require('./Routes/vehicle')
+const renterRouter = require('./Routes/renter'); 
+const billingRouter = require('./Routes/billing'); 
 
 const app = express()
 const PORT = 5000; 
@@ -16,9 +17,10 @@ app.get('/', (req, res)=>{
     res.json('Under development')
 })
 
-app.use('/user', userRouter)
-app.use('/listing', listingRouter)
-app.use('/owner', ownerRouter)
+app.use('/rentee', renteeRouter)
+app.use('/vehicle', vehicleRouter)
+app.use('/renter', renterRouter)
+app.use('/billing', billingRouter)
 
 app.listen(PORT, ()=>{
     console.log(`server running on port ${PORT}`); 
