@@ -1,36 +1,46 @@
-body{
-    background:radial-gradient(#e5e5e5,#ffff,#e5e5e5) ;
+body {
+    background: radial-gradient(#e5e5e5, #ffff, #e5e5e5);
 }
-.card{
+
+.card {
     width: 29rem;
-    height:29rem;
+    height: 29rem;
     margin-top: 2rem;
+    margin-bottom: 20rem; /* Add margin between cards */
 }
+
 .card-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three cards per row */
     gap: 1rem; /* Adjust the gap between cards */
     flex-wrap: wrap;
-    justify-content: space-aroud;
-    width:100vw;
-  }
-.card:hover{
-    box-shadow: 5px 20px 10px 1px rgba(0,0,0,0.253)!important ;
+    justify-content: space-around;
+    width: 100vw;
+    margin-top: 2rem; /* Adjust margin-top for consistent spacing */
 }
-.card-body{
-    padding:3rem 0 !important;
+
+.card:hover {
+    box-shadow: 5px 20px 10px 1px rgba(0, 0, 0, 0.253) !important;
 }
-.card-text{
+
+.card-body {
+    padding: 3rem 0 !important;
+}
+
+.card-text {
     font-size: 0.9rem;
     padding: 0.4rem 1.9rem;
 }
-.overflow{
-    overflow:hidden;
+
+.overflow {
+    overflow: hidden;
 }
-.card-img-top{
-    transform:scale(1);
+
+.card-img-top {
+    transform: scale(1);
     transition: transform 0.5s ease;
 }
-.card-img-top:hover{
-   transform: scale(1.1); 
+
+.card-img-top:hover {
+    transform: scale(1.1);
 }
