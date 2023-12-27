@@ -47,7 +47,7 @@
   
   .image {
     position: absolute;
-    background-image: url(../image.png);
+    background-image: url("../public/cra2.png");
     background-size: cover;
     top: 20px;
     right: 20px;
