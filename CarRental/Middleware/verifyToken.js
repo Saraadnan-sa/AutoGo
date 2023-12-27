@@ -7,7 +7,7 @@ const verifyToken = async (req, res, next) => {
 		console.log(req.headers); 
         const token = req.headers['token'];
         if (!token) {
-            return res.status(401).end("Please login before proceeding");
+            return res.status(401).send({error: "Please login before proceeding"});
         }
 
         // Verify and decode the token

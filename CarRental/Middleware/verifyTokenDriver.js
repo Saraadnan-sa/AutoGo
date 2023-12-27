@@ -13,7 +13,7 @@ const verifyToken = async (req, res, next) => {
 		// Verify and decode the token
 		const data = jwt.verify(token, JWT_SECRET);
 		console.log(data);
-		req.rentee = data.rentee;
+		req.driver = data.driver;
 		next();
 	} catch (error) {
 		res.status(401).end(error.message);

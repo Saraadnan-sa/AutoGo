@@ -40,7 +40,7 @@ router.post('/signup', [
                 password: (await securedPassword).toString(),
                 email: req.body.email, 
                 address: req.body.address, 
-                phoneNumber: req.body.number, 
+                phoneNumber: req.body.phoneNumber, 
                 cnic: req.body.cnic, 
                 age: req.body.age
             })

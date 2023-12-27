@@ -2,6 +2,10 @@ const express = require('express')
 const router = express.Router(); 
 const Driver = require('../Models/Driver')
 const {body, validationResult} = require('express-validator')
+const bcrypt = require('bcryptjs'); 
+const session = require('express-session')
+const jwt = require('jsonwebtoken'); 
+const JWT_SECRET = "car_rental"; 
 
 router.post('/signup', [
     body('email').isEmail(),
@@ -33,11 +37,11 @@ router.post('/signup', [
                 password: (await securedPassword).toString(),
                 email: req.body.email, 
                 address: req.body.address, 
-                phoneNumber: req.body.number, 
+                phoneNumber: req.body.phoneNumber, 
                 cnic: req.body.cnic, 
                 age: req.body.age, 
-                type_driver: req.body.type_driver, 
-                perHourRate: req.body.perHourRate
+                type_driver: req.body.driverType,  
+                perHourRate: req.body.ratePerHour
             })
         
         const data = {
@@ -57,7 +61,7 @@ router.post('/signup', [
     }
     catch(error)
     {
-        res.status(500).send(error.message); 
+        res.status(500).send({error: error.message}); 
     }
 
 })
@@ -107,6 +111,8 @@ router.post('/login', [
     }
     catch(error)
     {
-        res.status(500).send("Internal error occured"); 
+        res.status(500).send({msg: "Internal error occured"}); 
     }
 })
+
+module.exports = router; 
