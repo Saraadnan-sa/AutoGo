@@ -1,6 +1,6 @@
 import React from "react";
 
-function LoginPage() {
+const Login = () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -44,4 +44,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;
