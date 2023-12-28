@@ -1,14 +1,20 @@
 import Signup from './component/Signup';
 import ListingsPage from './Pages/ListingsPage';
+import SingleCarPage from './Pages/SingleCarPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AboutUs from './Pages/AboutUs';
+import NotFoundPage from './Pages/PageNotFound';
 
 function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path='/signup' element={<Signup />} />
-				<Route path='/availableCars' element={<ListingsPage/>} />
-				<Route path='/' element={<h1>Hello</h1>}/>
+				<Route path='/signup' exact element={<Signup />} />
+				<Route path='/availableCars' exact element={<ListingsPage />} />
+				<Route path='/aboutUs' exact element={<AboutUs />} />
+				<Route path='/vehicle/:id' exact element={<SingleCarPage />} />
+				<Route path='/' exact element={<h1>Hello</h1>} />
+				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</Router>
 	)

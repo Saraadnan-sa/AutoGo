@@ -12,9 +12,15 @@ router.get('/getListings', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-	const id = req.params; 
-	const vehicle = await Vehicle.findById(id); 
-	res.json(vehicle); 
+	const { id } = req.params;
+
+	try {
+		const vehicle = await Vehicle.findById(id);
+		return res.json(vehicle);
+	}
+	catch (error) {
+		return res.status(500).send({ error: error });
+	}
 })
 
 module.exports = router; 

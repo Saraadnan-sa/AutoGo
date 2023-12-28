@@ -1,47 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./booking_car.css";
-import { useState } from "react";
-import { useEffect } from "react";
 import fetchData from "../utility/fetchData";
+import Spinner from "./Spinner";
 
 const SingleCar = (props) => {
-	const [vehicle, setVehicle] = useState([])
+	const [vehicle, setVehicle] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		const response = fetchData(`/listing/${props.id}`, { method: 'GET' })
-		setVehicle(response);
-	}, [props])
+		const fetchVehicle = async () => {
+			setLoading(true);
+			try {
+				const response = await fetchData(`/vehicle/${props.id}`, { method: 'GET' });
+				setVehicle(response);
+			} catch (error) {
+				console.error('Error fetching vehicle:', error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchVehicle();
+	}, [props.id]);
 
 	return (
-		<div className="vehicle-container">
-			<h1>{vehicle.name}</h1>
-			<div class="image_vehicle"></div>
-			<p>Owner: {vehicle.owner}</p>
-			<p className={vehicle.availability ? "availability" : "unavailability"}>
-				{vehicle.availability ? "Available" : "Not Available"}
-			</p>
-			<p>Model: {vehicle.model}</p>
-			<p>Make: {vehicle.make}</p>
-			<p>Engine Capacity: {vehicle.engineCapacity}</p>
-			<p>Mileage: {vehicle.mileage}</p>
-			<p>Region: {vehicle.region}</p>
-			<p>Rent: {vehicle.rent}</p>
-			<p>Driver: {vehicle.driver ? "Available" : "Not Available"}</p>
-			<p>Car Number: {vehicle.car_number}</p>
-			<p>Duration: {vehicle.duration}</p>
-			<hr />
+		<div className="vehicle-container" style={{ width: '70vw' }}>
+			{loading ? (
+				<Spinner />
+			) : (
+				<div className="row">
+					{/* Left side content */}
+					<div className="col-md-6 ">
+						<h1>{vehicle.name}</h1>
+						<div className="image_vehicle"><img src={vehicle.image} alt="vehicle image " /></div>
+						<p>Owner: {vehicle.owner}</p>
+						<p>
+							Availability: <p className={vehicle.availability ? "availability" : "unavailability"}> {vehicle.availability ? "Available" : "Not Available"}</p>
+						</p>
+						<p>Model: {vehicle.model}</p>
+						<p>Make: {vehicle.make}</p>
+						<p>Engine Capacity: {vehicle.engineCapacity}cc</p>
+					</div>
 
+					{/* Right side content */}
+					<div className="col-md-6 ">
+						<p>Mileage: {vehicle.mileage}</p>
+						<p>Region: {vehicle.region}</p>
+						<p>Rent: {vehicle.rentperhour}</p>
+						<p>Driver: <p className={vehicle.driver ? "availability" : "unavailability"}> {vehicle.driver ? "Available" : "Not Available"}</p></p>
+						<p>Car Number: {vehicle.car_number}</p>
+						<p>Duration: {vehicle.duration}</p>
+						<hr />
 
-			<p>
-				<button type="button" className="btn btn-secondary button_space">
-					Book
-				</button>
-			</p>
-			<p>
-				<button type="button" className="btn btn-secondary button_space">
-					Generate receipt
-				</button>
-			</p>
+						<p>
+							<button type="button" className="btn btn-success button_space">
+								Book
+							</button>
+						</p>
+						{/* <p>
+							<button type="button" className="btn btn-secondary button_space">
+								Generate receipt
+							</button>
+						</p> */}
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };

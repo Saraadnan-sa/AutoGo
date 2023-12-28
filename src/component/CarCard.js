@@ -19,7 +19,7 @@ const CarCard = (props) => {
 							<li>Mileage: {props.mileage}km</li>
 							<li>Rate: {props.rate} per Hour</li>
 						</ul>
-						<Link type="button" className="btn btn-primary" to='/'>
+						<Link type="button" className="btn btn-primary" to={`/vehicle/${props.id}`}>
 							Read More
 						</Link>
 					</div>
