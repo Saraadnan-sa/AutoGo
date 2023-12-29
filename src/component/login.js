@@ -41,6 +41,7 @@ const Login = () => {
 				const data = await response.json();
 				console.log(data.token); // Handle successful login
 				window.localStorage.setItem('token', data.token);
+				window.localStorage.setItem('user', formData.userType);
 				window.location.href = '/availableCars';
 			} else {
 				console.error("Login failed");
