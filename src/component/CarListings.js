@@ -13,11 +13,12 @@ const CarListings = () => {
 			setLoading(true);
 
 			try {
-				const response = await fetchData('/vehicle/getListings', {
+				let response = await fetchData('/vehicle/getListings', {
 					method: 'GET',
 				});
 
 				console.log(response);
+				response = await response.json()
 				setCars(response);
 			} catch (error) {
 				console.error('Error fetching cars:', error);
