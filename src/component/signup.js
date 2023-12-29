@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import fetchData from "../utility/fetchData";
+import { Link } from "react-router-dom";
 
 const radioInlineStyle = {
   display: "inline-block",
@@ -73,6 +74,7 @@ function SignupForm() {
       if (response.ok) {
         const data = await response.json();
         console.log(data); // Handle successful signup
+		window.location.href = '/availableCars'; 
       } else {
         console.error("Signup failed");
       }
@@ -271,6 +273,11 @@ function SignupForm() {
           <button type="submit" className="btn btn-primary">
             Signup
           </button>
+		  <div className="register-link">
+					<p>
+						Already have an account?<Link to="/login" style={{color: 'white', marginLeft: '10px'}}>Login</Link>
+					</p>
+				</div>
         </form>
       </div>
     </div>

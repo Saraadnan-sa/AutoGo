@@ -4,12 +4,14 @@ import SingleCarPage from './Pages/SingleCarPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AboutUs from './Pages/AboutUs';
 import NotFoundPage from './Pages/PageNotFound';
+import LoginPage from './Pages/LoginPage';
 
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route path='/signup' exact element={<Signup />} />
+				<Route path='/login' exact element={<LoginPage />} />
 				<Route path='/availableCars' exact element={<ListingsPage />} />
 				<Route path='/aboutUs' exact element={<AboutUs />} />
 				<Route path='/vehicle/:id' exact element={<SingleCarPage />} />
