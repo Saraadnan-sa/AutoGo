@@ -2,16 +2,24 @@ import React, { useState, useEffect } from "react";
 import "./booking_car.css";
 import fetchData from "../utility/fetchData";
 import Spinner from "./Spinner";
+import { Link } from "react-router-dom";
 
 const SingleCar = (props) => {
 	const [vehicle, setVehicle] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [owner, setOwner] = useState('');
 
 	useEffect(() => {
 		const fetchVehicle = async () => {
 			setLoading(true);
 			try {
-				const response = await fetchData(`/vehicle/${props.id}`, { method: 'GET' });
+				let response = await fetchData(`/vehicle/${props.id}`, { method: 'GET' });
+				response = await response.json();
+
+				let owner = await fetchData(`/renter/${response.renter}`, { method: 'GET' });
+				owner = await owner.json();
+				console.log(owner)
+				setOwner(owner.name);
 				setVehicle(response);
 			} catch (error) {
 				console.error('Error fetching vehicle:', error);
@@ -21,7 +29,7 @@ const SingleCar = (props) => {
 		};
 
 		fetchVehicle();
-	}, [props.id]);
+	}, [props.id, props.renter]);
 
 	return (
 		<div className="vehicle-container" style={{ width: '70vw' }}>
@@ -32,8 +40,8 @@ const SingleCar = (props) => {
 					{/* Left side content */}
 					<div className="col-md-6 ">
 						<h1>{vehicle.name}</h1>
-						<div className="image_vehicle"><img src={vehicle.image} alt="vehicle image " /></div>
-						<p>Owner: {vehicle.owner}</p>
+						<div className="image_vehicle"><img src={vehicle.image} alt="vehicle" /></div>
+						<p>Owner: <Link to={`/renter/${vehicle.renter}`}> {owner.toUpperCase()}</Link></p>
 						<p>
 							Availability: <p className={vehicle.availability ? "availability" : "unavailability"}> {vehicle.availability ? "Available" : "Not Available"}</p>
 						</p>
@@ -46,7 +54,7 @@ const SingleCar = (props) => {
 					<div className="col-md-6 ">
 						<p>Mileage: {vehicle.mileage}</p>
 						<p>Region: {vehicle.region}</p>
-						<p>Rent: {vehicle.rentperhour}</p>
+						<p>Rent: {vehicle.rentperhour} PKR</p>
 						<p>Driver: <p className={vehicle.driver ? "availability" : "unavailability"}> {vehicle.driver ? "Available" : "Not Available"}</p></p>
 						<p>Car Number: {vehicle.car_number}</p>
 						<p>Duration: {vehicle.duration}</p>

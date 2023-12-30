@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaCar, FaInfoCircle, FaUser, FaCalendarAlt, FaSignOutAlt } from "react-icons/fa"; // Importing react-icons
 
-function Navbar() {
+const Navbar = () => {
 	return (
 		<>
 			<style>
@@ -73,7 +73,7 @@ function Navbar() {
 								</Link>
 							</li>
 							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to="/availableCars">
+								<Link className="nav-link active" aria-current="page" to="/myBookings">
 									<FaCalendarAlt /> My Bookings
 								</Link>
 							</li>

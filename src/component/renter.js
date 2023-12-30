@@ -1,60 +1,78 @@
 import "./renter.css";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { faCar } from '@fortawesome/free-solid-svg-icons';
-import { faUser} from '@fortawesome/free-solid-svg-icons';
-import { faIdCard } from '@fortawesome/free-solid-svg-icons';
-function Renter() {
-  return (
-    <>
-      <body>
+import { faPhone, faHouse, faInfoCircle, faUser, faIdCard } from '@fortawesome/free-solid-svg-icons';
+import img from '../download.png'
+import fetchData from "../utility/fetchData";
+import Spinner from "./Spinner";
 
-        <div class="main">
+const Renter = (props) => {
+	const [renter, setRenter] = useState([]);
+	const [loading, setLoading] = useState(false);
 
-            <div class="left">
-                <div class="title">
-                    <h1>RENTER</h1>
-                </div>
-                 <div class="desc">
-                   <div>
-                   <FontAwesomeIcon icon={faPhone} /> contact</div>
-                   <hr />
-                   <div><FontAwesomeIcon icon={faHouse} /> Address</div>
-                   <hr />
-                   <div><FontAwesomeIcon icon={faIdCard} /> Cnic</div>
-                   <hr />
-                   <div><FontAwesomeIcon icon={faUser} /> Age</div>
-                   <hr />
-                   <div><FontAwesomeIcon icon={faCar} /> <a href="renter_cars.js">No of cars registered</a></div>
-                   <hr />
-                   <button>EDIT</button>
-                   <hr />
-                </div>
-                
-                
-            </div>
+	useEffect(() => {
+		const fetchInfo = async () => {
+			try {
+				setLoading(true);
+				let response = await fetchData(`/renter/${props.id}`, { method: 'GET' });
+				response = await response.json();
+				setRenter(response);
+			} catch (error) {
+				console.error("Error fetching renter information:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchInfo();
+	}, [props.id]);
 
-            <div class="right">
-                <div class="image">
-               
-                </div>
+	return (
+		<>
+			{loading ? <Spinner />
+				:
+				<div className="main">
+					<div className="left">
+						<div className="title">
+							<h1>RENTER INFORMATION <FontAwesomeIcon className="icon" icon={faInfoCircle} /></h1>
+						</div>
+						<div className="desc">
+							<div>
+								<FontAwesomeIcon className="icon" icon={faPhone} /> {renter.phoneNumber}
+							</div>
+							<hr />
+							<div>
+								<FontAwesomeIcon className="icon" icon={faHouse} /> {renter.address}
+							</div>
+							<hr />
+							<div>
+								<FontAwesomeIcon className="icon" icon={faIdCard} /> {renter.cnic}
+							</div>
+							<hr />
+							<div>
+								<FontAwesomeIcon className="icon" icon={faUser} /> Age: {renter.age}
+							</div>
+							<hr />
+							{/* <div>
+							<FontAwesomeIcon className="icon" icon={faCar} /> <a href="renter_cars.js">No of cars registered</a>
+						</div> */}
+						</div>
+					</div>
 
-                <div class="info">
-                    <h3>Sara Adnan</h3>
-                    <a href="mailto:sghori.bese22seecs@seecs.edu.pk"><h5>Renter Email</h5></a>
-                </div>
-            </div>
+					<div className="right">
+						<div className="image" style={{ margin: '40px 0' }}>
+							<img src={img} style={{ borderRadius: '150px' }} alt="user" />
+						</div>
 
-        </div>
-
-    </body>
-    </>
-  );
-}
+						<div className="info">
+							<h3>{renter.name}</h3>
+							<a href={`mailto:${renter.email}`}>
+								<h5>{renter.email}</h5>
+							</a>
+						</div>
+					</div>
+				</div>}
+		</>
+	);
+};
 
 export default Renter;
-
-
-

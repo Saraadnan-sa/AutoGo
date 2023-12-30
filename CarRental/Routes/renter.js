@@ -107,6 +107,19 @@ router.post('/login', [
 	}
 })
 
+router.get('/:id', async(req, res)=> 
+{
+	const {id} = req.params; 
+	try 
+	{
+		const renter = await Renter.findById(id); 
+		return res.status(200).send(renter); 
+	}
+	catch(error){
+		return res.status(400).send({error: error}); 
+	}
+})
+
 router.use(verifyToken);
 
 router.get('/getBookings', async (req, res) => {
@@ -148,5 +161,7 @@ router.delete('/deleteListing/:id', async (req, res) => {
 	const id = req.params.id;
 	await Vehicle.findByIdAndDelete(id);
 })
+
+
 
 module.exports = router; 

@@ -18,6 +18,8 @@ const CarCard = (props) => {
 						<ul>
 							<li>Mileage: {props.mileage}km</li>
 							<li>Rate: {props.rate} per Hour</li>
+							<li>Driver: {props.driver ? 'Available': 'Not Available'}</li>
+							<li>Petrol: {props.withPetrol ? 'Included': 'Not Included'}</li>
 						</ul>
 						<Link type="button" className="btn btn-primary" to={`/vehicle/${props.id}`}>
 							Read More
