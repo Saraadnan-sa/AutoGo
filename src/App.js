@@ -5,10 +5,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AboutUs from './Pages/AboutUs';
 import NotFoundPage from './Pages/PageNotFound';
 import LoginPage from './Pages/LoginPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
 		<Router>
+			<ToastContainer />
 			<Routes>
 				<Route path='/signup' exact element={<Signup />} />
 				<Route path='/login' exact element={<LoginPage />} />

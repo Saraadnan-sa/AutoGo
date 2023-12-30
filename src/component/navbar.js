@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaCar, FaInfoCircle, FaUser, FaCalendarAlt } from "react-icons/fa"; // Importing react-icons
+import { FaCar, FaInfoCircle, FaUser, FaCalendarAlt, FaSignOutAlt } from "react-icons/fa"; // Importing react-icons
 
 function Navbar() {
 	return (
@@ -85,9 +85,14 @@ function Navbar() {
 						</ul>
 						<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 							<li className="nav-item">
-								<a className="nav-link active" aria-current="page" href="#">
+								<Link className="nav-link active" aria-current="page" to="/login">
+									<FaSignOutAlt /> Logout
+								</Link>
+							</li>
+							<li className="nav-item">
+								<Link className="nav-link active" aria-current="page" to="#">
 									<FaUser /> My Profile
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>

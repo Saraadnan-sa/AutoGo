@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import fetchData from "../utility/fetchData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const radioInlineStyle = {
 	display: "inline-block",
@@ -11,7 +13,10 @@ const radioInputStyle = {
 	marginRight: "5px",
 };
 
-function SignupForm() {
+const SignupForm = () => {
+
+	const navigate = useNavigate();
+
 	const [formData, setFormData] = useState({
 		name: "",
 		password: "",
@@ -71,16 +76,33 @@ function SignupForm() {
 
 			console.log(response);
 
-
 			if (response.ok) {
 				const data = await response.json();
 				console.log(data.token); // Handle successful signup
 				window.localStorage.setItem('token', data.token)
-				window.localStorage.setItem('user', formData.userType); 
-				window.location.href = '/availableCars';
+				window.localStorage.setItem('user', formData.userType);
+
+				toast.success('Signup successful!', {
+					position: toast.POSITION.TOP_RIGHT,
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+				navigate('/availableCars', { replace: true })
 			} else {
 				console.error("Signup failed");
-				alert("User already exists");
+				toast.error('Error signing up', {
+					position: toast.POSITION.TOP_RIGHT,
+					autoClose: 5000, // Close after 5 seconds
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			}
 		} catch (error) {
 			console.error("Error during signup:", error);

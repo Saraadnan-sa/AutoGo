@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import fetchData from "../utility/fetchData";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -24,7 +27,7 @@ const Login = () => {
 		e.preventDefault(); // Prevent the default form submission behavior
 
 		try {
-			console.log(formData); 
+			console.log(formData);
 			// Make API request to the appropriate endpoint
 			const endpoint = `/${formData.userType}/login`; // Replace with your actual login endpoint
 			const response = await fetchData(endpoint, {
@@ -42,10 +45,29 @@ const Login = () => {
 				console.log(data.token); // Handle successful login
 				window.localStorage.setItem('token', data.token);
 				window.localStorage.setItem('user', formData.userType);
-				window.location.href = '/availableCars';
+
+				toast.success('Login successful!', {
+					position: toast.POSITION.TOP_RIGHT,
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+
+				navigate('/availableCars', { replace: true })
 			} else {
 				console.error("Login failed");
-				alert("Invalid email or password");
+				toast.error('Invalid email or password', {
+					position: toast.POSITION.TOP_RIGHT,
+					autoClose: 3000, // Close after 5 seconds
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			}
 		} catch (error) {
 			console.error("Error during login:", error);
@@ -81,7 +103,7 @@ const Login = () => {
 					</div>
 
 					<div>
-						<label style={{margin: '0 10px'}}>
+						<label style={{ margin: '0 10px' }}>
 							Renter
 							<input
 								type="radio"
@@ -91,7 +113,7 @@ const Login = () => {
 								onChange={handleradioChange}
 							/>
 						</label>
-						<label style={{margin: '0 10px'}}>
+						<label style={{ margin: '0 10px' }}>
 							Driver
 							<input
 								type="radio"
@@ -101,7 +123,7 @@ const Login = () => {
 								onChange={handleradioChange}
 							/>
 						</label>
-						<label style={{margin: '0 10px'}}>
+						<label style={{ margin: '0 10px' }}>
 							Rentee
 							<input
 								type="radio"
