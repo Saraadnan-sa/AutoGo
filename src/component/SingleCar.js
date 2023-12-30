@@ -16,7 +16,7 @@ const SingleCar = (props) => {
 				let response = await fetchData(`/vehicle/${props.id}`, { method: 'GET' });
 				response = await response.json();
 
-				let owner = await fetchData(`/renter/${response.renter}`, { method: 'GET' });
+				let owner = await fetchData(`/renter/renter/${response.renter}`, { method: 'GET' });
 				owner = await owner.json();
 				console.log(owner)
 				setOwner(owner.name);

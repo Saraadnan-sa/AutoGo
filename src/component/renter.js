@@ -14,7 +14,7 @@ const Renter = (props) => {
 		const fetchInfo = async () => {
 			try {
 				setLoading(true);
-				let response = await fetchData(`/renter/${props.id}`, { method: 'GET' });
+				let response = await fetchData(`/renter/renter/${props.id}`, { method: 'GET' });
 				response = await response.json();
 				setRenter(response);
 			} catch (error) {

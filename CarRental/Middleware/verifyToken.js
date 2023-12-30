@@ -4,7 +4,6 @@ const JWT_SECRET = "car_rental";
 const verifyToken = async (req, res, next) => {
     try {
         // fetching the user from jwt token 
-		console.log(req.headers); 
         const token = req.headers['token'];
         if (!token) {
             return res.status(401).send({error: "Please login before proceeding"});

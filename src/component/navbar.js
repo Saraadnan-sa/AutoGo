@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCar, FaInfoCircle, FaUser, FaCalendarAlt, FaSignOutAlt } from "react-icons/fa"; // Importing react-icons
 
 const Navbar = () => {
+	const navigate = useNavigate(); 
+
+	const logout = () => 
+	{
+		localStorage.removeItem('user')
+		localStorage.removeItem('token')
+
+		navigate('/login', {replace: true}); 
+	}
 	return (
 		<>
 			<style>
@@ -85,9 +94,9 @@ const Navbar = () => {
 						</ul>
 						<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to="/login">
+								<a className="nav-link active" aria-current="page" hrref="#" onClick={logout}>
 									<FaSignOutAlt /> Logout
-								</Link>
+								</a>
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to="#">

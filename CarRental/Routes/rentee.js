@@ -106,11 +106,18 @@ router.post('/login', [
     }
 })
 
-router.get('/fetchBookings', async(req, res)=> 
+router.get('/getBookings', async(req, res)=> 
 {
 	const id = req.rentee.id; 
-    const bookings = await Booked.find({rentee: id}); 
-    res.json(bookings)
+	try 
+	{
+		const bookings = await Booked.find({rentee: id}); 
+		res.json(bookings)
+	}
+	catch(error)
+	{
+		res.status(400).send({error: error})
+	}
 })
 
 module.exports = router; 

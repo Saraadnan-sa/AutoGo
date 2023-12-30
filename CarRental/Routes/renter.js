@@ -107,7 +107,7 @@ router.post('/login', [
 	}
 })
 
-router.get('/:id', async(req, res)=> 
+router.get('/renter/:id', async(req, res)=> 
 {
 	const {id} = req.params; 
 	try 
@@ -123,14 +123,22 @@ router.get('/:id', async(req, res)=>
 router.use(verifyToken);
 
 router.get('/getBookings', async (req, res) => {
-	const id = req.renter.id;
-	const bookings = await Booked.find({ renter: id })
-	res.json(bookings)
+	const id = req.renter.id; 
+	console.log(id); 
+	try 
+	{
+		const bookings = await Booked.find({renter: id}); 
+		res.json(bookings)
+	}
+	catch(error)
+	{
+		res.status(400).send({error: error})
+	}
 })
 
 router.get('/getListingsRenter', async (req, res) => { //particular user
 	console.log(req.renter);
-	const listings = await Vehicle.find({ owner: req.renter.id });
+	const listings = await Vehicle.find({ renter: req.renter.id });
 	res.json(listings);
 })
 
