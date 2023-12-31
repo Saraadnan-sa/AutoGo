@@ -4,6 +4,7 @@ const Booked = require('../Models/Booked')
 const Rentee = require('../Models/Rentee')
 const bcrypt = require('bcryptjs'); 
 const session = require('express-session')
+const verifyToken = require('../Middleware/verifyTokenRentee')
 const jwt = require('jsonwebtoken'); 
 const JWT_SECRET = "car_rental"; 
 const { body, validationResult } = require('express-validator');
@@ -105,6 +106,8 @@ router.post('/login', [
         res.status(500).send("Internal error occured"); 
     }
 })
+
+router.use(verifyToken); 
 
 router.get('/getBookings', async(req, res)=> 
 {
