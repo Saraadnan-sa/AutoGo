@@ -55,8 +55,14 @@ const Login = () => {
 					draggable: true,
 					progress: undefined,
 				});
-
-				navigate('/availableCars', { replace: true })
+				if(formData.userType === 'renter')
+				{
+					navigate('/availableCars', { replace: true })
+				}
+				else if (formData.userType === 'rentee')
+				{
+					navigate('/renterCars', { replace: true })
+				}
 			} else {
 				console.error("Login failed");
 				toast.error('Invalid email or password', {

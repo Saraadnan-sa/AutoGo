@@ -138,8 +138,15 @@ router.get('/getBookings', async (req, res) => {
 
 router.get('/getListingsRenter', async (req, res) => { //particular user
 	console.log(req.renter);
-	const listings = await Vehicle.find({ renter: req.renter.id });
-	res.json(listings);
+	try 
+	{
+		const listings = await Vehicle.find({ renter: req.renter.id });
+		res.json(listings);
+	}
+	catch(error)
+	{
+		res.status(500).send({error: error})
+	}
 })
 
 router.put('/updatelisting/:id', async (req, res) => {

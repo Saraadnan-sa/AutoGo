@@ -60,11 +60,11 @@ const SingleCar = (props) => {
 						<p>Duration: {vehicle.duration}</p>
 						<hr />
 
-						<p>
+						{localStorage.getItem('user') == 'rentee' ? <p>
 							<button type="button" className="btn btn-success button_space">
 								Book
 							</button>
-						</p>
+						</p> : <></>}
 						{/* <p>
 							<button type="button" className="btn btn-secondary button_space">
 								Generate receipt

@@ -2,14 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaCar, FaInfoCircle, FaUser, FaCalendarAlt, FaSignOutAlt } from "react-icons/fa"; // Importing react-icons
 
 const Navbar = () => {
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
+	const userType = localStorage.getItem('user');
 
-	const logout = () => 
-	{
+	const logout = () => {
 		localStorage.removeItem('user')
 		localStorage.removeItem('token')
 
-		navigate('/login', {replace: true}); 
+		navigate('/login', { replace: true });
 	}
 	return (
 		<>
@@ -76,11 +76,19 @@ const Navbar = () => {
 					</button>
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to="/availableCars">
-									<FaCar /> Browse Listings
-								</Link>
-							</li>
+							{
+								userType == 'renter' ? <li className="nav-item">
+									<Link className="nav-link active" aria-current="page" to="/renterCars">
+										<FaCar /> My Listings
+									</Link>
+								</li> :
+									<li className="nav-item">
+										<Link className="nav-link active" aria-current="page" to="/availableCars">
+											<FaCar /> Browse Listings
+										</Link>
+									</li>
+							}
+
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to="/myBookings">
 									<FaCalendarAlt /> My Bookings

@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RenterPage from './Pages/RenterPage';
 import MyBookingsPage from './Pages/MyBookingsPage';
+import RenterCarsPage from './Pages/RenterCarsPage';
 
 function App() {
 	return (
@@ -18,11 +19,12 @@ function App() {
 				<Route path='/signup' exact element={<Signup />} />
 				<Route path='/login' exact element={<LoginPage />} />
 				<Route path='/availableCars' exact element={<ListingsPage />} />
+				<Route path='/renterCars' exact element={<RenterCarsPage />} />
 				<Route path='/myBookings' exact element={<MyBookingsPage />} />
 				<Route path='/aboutUs' exact element={<AboutUs />} />
 				<Route path='/vehicle/:id' exact element={<SingleCarPage />} />
-				<Route path='/renter/:id' exact element={< RenterPage/>} />
-				<Route path='/' exact element={<h1>Hello</h1>} />
+				<Route path='/renter/:id' exact element={< RenterPage />} />
+				<Route path='/' exact element={<LoginPage />} />
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</Router>
