@@ -161,15 +161,24 @@ router.put('/updatelisting/:id', async (req, res) => {
 })
 
 router.post('/addlisting', async (req, res) => {
-	const { name, availability, model, make, engineCapacity, mileage, region, rentperhour, driver, car_number, duration, withPetrol } = req.body;
+	const { name, model, make, engineCapacity, mileage, region, rentperhour, driver, car_number, duration, withPetrol } = req.body;
 
 	const renter = req.renter.id;
+	console.log(req.body); 
 
-	const listing = await Vehicle.create({
-		name, renter, availability, model, make, engineCapacity, mileage, region, rentperhour, driver, car_number, duration, withPetrol
-	})
+	try{
 
-	res.json(listing);
+		const listing = await Vehicle.create({
+			name, renter, model, make, engineCapacity, mileage, region, rentperhour, driver, car_number, duration, withPetrol
+		})
+	
+		res.json(listing);
+	}
+	catch(error)
+	{
+		res.json({error: error}); 
+	}
+
 })
 
 router.delete('/deleteListing/:id', async (req, res) => {

@@ -55,11 +55,11 @@ const Login = () => {
 					draggable: true,
 					progress: undefined,
 				});
-				if(formData.userType === 'renter')
+				if(formData.userType === 'rentee' || formData.userType === 'driver')
 				{
 					navigate('/availableCars', { replace: true })
 				}
-				else if (formData.userType === 'rentee')
+				else if (formData.userType === 'renter')
 				{
 					navigate('/renterCars', { replace: true })
 				}
