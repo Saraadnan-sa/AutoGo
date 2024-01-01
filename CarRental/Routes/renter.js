@@ -122,6 +122,19 @@ router.get('/renter/:id', async(req, res)=>
 
 router.use(verifyToken);
 
+router.get('/profile', async(req, res)=> 
+{
+	const {id} = req.renter; 
+	try 
+	{
+		const renter = await Renter.findById(id); 
+		return res.status(200).send(renter); 
+	}
+	catch(error){
+		return res.status(400).send({error: error}); 
+	}
+})
+
 router.get('/getBookings', async (req, res) => {
 	const id = req.renter.id; 
 	console.log(id); 

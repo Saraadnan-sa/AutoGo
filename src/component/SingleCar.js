@@ -65,11 +65,7 @@ const SingleCar = (props) => {
 								Book
 							</button>
 						</p> : <></>}
-						{/* <p>
-							<button type="button" className="btn btn-secondary button_space">
-								Generate receipt
-							</button>
-						</p> */}
+						
 					</div>
 				</div>
 			)}

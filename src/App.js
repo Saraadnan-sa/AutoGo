@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import RenterPage from './Pages/RenterPage';
 import MyBookingsPage from './Pages/MyBookingsPage';
 import RenterCarsPage from './Pages/RenterCarsPage';
+import ProfilePage from './Pages/ProfilePage';
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path='/myBookings' exact element={<MyBookingsPage />} />
 				<Route path='/aboutUs' exact element={<AboutUs />} />
 				<Route path='/vehicle/:id' exact element={<SingleCarPage />} />
+				<Route path='/profile' exact element={<ProfilePage />} />
 				<Route path='/renter/:id' exact element={< RenterPage />} />
 				<Route path='/' exact element={<LoginPage />} />
 				<Route path='*' element={<NotFoundPage />} />

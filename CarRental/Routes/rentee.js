@@ -123,4 +123,17 @@ router.get('/getBookings', async(req, res)=>
 	}
 })
 
+router.get('/profile', async(req, res)=> 
+{
+	const {id} = req.rentee; 
+	try 
+	{
+		const rentee = await Rentee.findById(id); 
+		return res.status(200).send(rentee); 
+	}
+	catch(error){
+		return res.status(400).send({error: error}); 
+	}
+})
+
 module.exports = router; 
