@@ -1,6 +1,7 @@
 import React from 'react'
 import fetchData from '../utility/fetchData';
 import { useState } from 'react';
+import { toast } from 'react-toastify'
 
 const AddModal = () => {
 	const token = localStorage.getItem('token')
@@ -21,7 +22,7 @@ const AddModal = () => {
 	});
 
 	const handleChange = (e) => {
-		const { name, value, type, checked } = e.target;
+		const { name, value } = e.target;
 		setFormData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -33,13 +34,39 @@ const AddModal = () => {
 			method: 'POST',
 			headers:
 			{
-				'Content-Type': 'application/json', 
+				'Content-Type': 'application/json',
 				token: token
 			},
-			body: JSON.stringify(formData) 
+			body: JSON.stringify(formData)
 		})
-		response = await response.json();
-		console.log(response);
+
+		if (response.ok) {
+
+			response = await response.json();
+			console.log(response);
+			// Navigate the user to '/renterCars'
+			toast.success('Car Added successfuly', {
+				position: toast.POSITION.TOP_RIGHT,
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+		else 
+		{
+			toast.error('Process failed', {
+				position: toast.POSITION.TOP_RIGHT,
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
 	}
 	return (
 		<>
@@ -58,7 +85,7 @@ const AddModal = () => {
 									<div className='col-md-6'>
 										<div className="mb-3">
 											<label htmlFor="recipient-name" className="col-form-label"><strong>Car Name:</strong></label>
-											<input type="text" name='name'className="form-control" id="recipient-name" value={formData.name}
+											<input type="text" name='name' className="form-control" id="recipient-name" value={formData.name}
 												onChange={handleChange} placeholder='e.g Honda City'></input>
 										</div>
 										<div className="mb-3">

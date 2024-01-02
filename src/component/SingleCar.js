@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./booking_car.css";
 import fetchData from "../utility/fetchData";
 import Spinner from "./Spinner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SingleCar = (props) => {
 	const [vehicle, setVehicle] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [owner, setOwner] = useState('');
+	const [ownerId, setOwnerId] = useState(); 
 
 	useEffect(() => {
 		const fetchVehicle = async () => {
@@ -16,9 +17,11 @@ const SingleCar = (props) => {
 				let response = await fetchData(`/vehicle/${props.id}`, { method: 'GET' });
 				response = await response.json();
 
+				 
 				let owner = await fetchData(`/renter/renter/${response.renter}`, { method: 'GET' });
 				owner = await owner.json();
 				console.log(owner)
+				setOwnerId(owner._id);
 				setOwner(owner.name);
 				setVehicle(response);
 			} catch (error) {
@@ -30,6 +33,14 @@ const SingleCar = (props) => {
 
 		fetchVehicle();
 	}, [props.id, props.renter]);
+
+	const navigate = useNavigate();
+
+	const handleBook = () => {
+		navigate('/billing', {
+			state: { vehicle: vehicle, ownerId: ownerId }
+		});
+	}
 
 	return (
 		<div className="vehicle-container" style={{ width: '70vw' }}>
@@ -60,12 +71,12 @@ const SingleCar = (props) => {
 						<p>Duration: {vehicle.duration}</p>
 						<hr />
 
-						{localStorage.getItem('user') == 'rentee' ? <p>
-							<button type="button" className="btn btn-success button_space">
+						{localStorage.getItem('user') === 'rentee' ? <p>
+							<button type="button" onClick={handleBook} className="btn btn-success button_space">
 								Book
 							</button>
 						</p> : <></>}
-						
+
 					</div>
 				</div>
 			)}

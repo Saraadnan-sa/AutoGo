@@ -4,7 +4,7 @@ const { Schema } = mongoose
 const bookedSchema = new Schema({
 	car: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'listing'
+		ref: 'vehicle'
 	},
 
 	renter: {

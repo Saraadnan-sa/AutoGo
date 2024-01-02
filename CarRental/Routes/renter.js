@@ -189,7 +189,7 @@ router.post('/addlisting', async (req, res) => {
 	}
 	catch(error)
 	{
-		res.json({error: error}); 
+		res.status(500).json({error: error}); 
 	}
 
 })

@@ -3,11 +3,17 @@ const Billing = require('../Models/Billing')
 const router = express.Router();
 
 router.post('/createBill', async (req, res) => {
-	const { renter, rentee, driver, bill_driver, bill_renter, paymentStaus } = req.body;
-	const bill = await Billing.create({
-		renter, rentee, driver, bill_driver, bill_renter, paymentStaus
-	});
-	res.json(bill);
+	try {
+		console.log(req.body);
+		const { renter, rentee, driver, bill_driver, bill_renter, paymentStatus } = req.body;
+		const bill = await Billing.create({
+			renter, rentee, driver, bill_driver, bill_renter, paymentStatus
+		});
+		res.json(bill);
+	}
+	catch (error) {
+		res.status(500).send({ error: error })
+	}
 })
 
 // router.put('/updateBill/:id', async (req, res) => {
@@ -24,6 +30,17 @@ router.post('/createBill', async (req, res) => {
 // 	}
 
 // })
+
+router.get('/getBill/:id', async (req, res) => {
+
+	const { id } = req.params;
+	try {
+		const bill = await Billing.findById(id);
+		res.json(bill);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+})
 
 router.get('/getBillsRentee/:id', async (req, res) => {
 

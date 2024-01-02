@@ -1,92 +1,180 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import './billing.css';
 import fetchData from '../utility/fetchData';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-const Billing = () => {
-	// State for rental details and options
+const Billing = (props) => {
+	const navigate = useNavigate();
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
-	const [includePetrol, setIncludePetrol] = useState(false);
-	const [includeDriver, setIncludeDriver] = useState(false);
+	const vehicle = props.vehicle;
+	const [petrolCost, setPetrolCost] = useState(0);
+	const [driverFee, setDriverFee] = useState(0);
+	const [totalAmount, setTotalAmount] = useState(0);
 
-	// Constants for pricing
-	const baseRentalFee = 50;
-	const petrolCost = 20;
-	const driverFee = 30;
+	useEffect(() => {
+		const calculateTotalAmount = () => {
+			const rentalDuration = calculateRentalDuration();
+			let calculatedTotalAmount = vehicle.rentperhour * rentalDuration;
 
-	// Function to calculate total amount
-	const calculateTotalAmount = () => {
-		const rentalDuration = calculateRentalDuration();
-		let totalAmount = baseRentalFee * rentalDuration;
+			if (vehicle.withPetrol) {
+				const calculatedPetrolCost = (20 / 100) * vehicle.rentperhour * rentalDuration;
+				calculatedTotalAmount += calculatedPetrolCost;
+				setPetrolCost(calculatedPetrolCost);
+			}
 
-		if (includePetrol) {
-			totalAmount += petrolCost;
-		}
+			if (vehicle.driver) {
+				const calculatedDriverFee = (30 / 100) * vehicle.rentperhour * rentalDuration;
+				calculatedTotalAmount += calculatedDriverFee;
+				setDriverFee(calculatedDriverFee);
+			}
 
-		if (includeDriver) {
-			totalAmount += driverFee;
-		}
+			setTotalAmount(calculatedTotalAmount);
 
-		return totalAmount;
-	};
+			return calculatedTotalAmount;
+		};
 
-	// Function to calculate rental duration in days
+		calculateTotalAmount();
+	}, [startDate, endDate, vehicle]);
+
 	const calculateRentalDuration = () => {
 		if (startDate && endDate) {
 			const start = new Date(startDate);
 			const end = new Date(endDate);
 			const timeDifference = Math.abs(end - start);
-			const rentalDuration = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-			return rentalDuration;
+			const rentalDuration = Math.ceil(timeDifference / (1000 * 60 * 60)); // Convert milliseconds to hours
+			return rentalDuration / 10;
 		}
-		return 0; // Return 0 if start or end date is not provided
+		return 0;
 	};
 
-	// Function to handle payment
-	const handlePayment = () => {
-		const response = fetchData('/createBill')
-		alert(`Payment Successful! Total Amount: $${calculateTotalAmount()}`);
-	};
+	const handlePayment = async () => {
+		const token = localStorage.getItem('token');
+		let response = await fetchData(`/rentee/profile`, {
+			method: 'GET', headers: {
+				token: token
+			}
+		});
+		response = await response.json();
+		const rentee = response._id;
+		let response_ = await fetchData('/billing/createBill', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				renter: props.ownerId,
+				rentee: rentee,
+				bill_renter: totalAmount - driverFee,
+				bill_driver: driverFee,
+				paymentStatus: 'Partial Done'
+			})
+		});
+		console.log(response_);
+
+		if (response_.ok) {
+			response_ = await response_.json();
+			console.log(response_);
+
+			let bookResponse = await fetchData('/booked/addbooking', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					car: vehicle._id,
+					renter: props.ownerId,
+					rentee: rentee,
+					startDate: startDate,
+					endDate: endDate,
+					bill: response_._id
+				})
+			});
+			console.log(bookResponse);
+
+			if (bookResponse.ok) {
+				bookResponse = await bookResponse.json()
+				console.log(bookResponse);
+				toast.success('Car Booked', {
+					position: toast.POSITION.TOP_RIGHT,
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+				navigate('/myBookings', { replace: 'true' })
+			}
+		}
+	}
+
 
 	return (
-		<div class="bill">
+		<div className="bill">
 			<h2>Billing Information</h2>
 
 			{/* Rental Details */}
-			<div class="duration">
-
+			<div className="duration">
 				<label>
 					Start Date:
-					<input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+					<input type="date" value={startDate} onChange={(e) => {
+						if (new Date(e.target.value) > Date.now())
+							setStartDate(e.target.value)
+						else {
+							toast.error('Start date must be greater than today date', {
+								position: toast.POSITION.TOP_RIGHT,
+								autoClose: 3000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+							});
+						}
+					}} />
 				</label>
 
-				<label>
+				<label style={{ marginLeft: '10px' }}>
 					End Date:
-					<input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+					<input type="date" value={endDate} onChange={(e) => {
+						if (new Date(e.target.value) > new Date(startDate))
+							setEndDate(e.target.value)
+						else {
+							toast.error('End date must be greater than start date', {
+								position: toast.POSITION.TOP_RIGHT,
+								autoClose: 3000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+							});
+						}
+					}} />
 				</label>
 			</div>
 
 			{/* Rental Options */}
 			<div>
-				<label>
-					Include Petrol:
-					<input type="checkbox" checked={includePetrol} onChange={() => setIncludePetrol(!includePetrol)} />
-				</label>
-				<br />
+				<p>
+					Include Petrol: {vehicle.withPetrol ? 'Yes' : 'No'}
+				</p>
 
-				<label>
-					Include Driver:
-					<input type="checkbox" checked={includeDriver} onChange={() => setIncludeDriver(!includeDriver)} />
-				</label>
+				<p>
+					Include Driver: {vehicle.driver ? 'Yes' : 'No'}
+				</p>
 			</div>
 
 			{/* Itemized Charges */}
 			<div>
 				<h3>Itemized Charges</h3>
-				<p>Base Rental Fee: ${baseRentalFee * calculateRentalDuration()}</p>
-				{includePetrol && <p>Petrol Cost: ${petrolCost}</p>}
-				{includeDriver && <p>Driver Fee: ${driverFee}</p>}
-				<p>Total Amount Payable: ${calculateTotalAmount()}</p>
+				<p>Base Rental Fee: PKR { vehicle.rentperhour* calculateRentalDuration()}</p>
+				{vehicle.withPetrol && <p>Petrol Cost: PKR {petrolCost}</p>}
+				{vehicle.driver && <p>Driver Fee: PKR {driverFee}</p>}
+				<p>Total Amount Payable: PKR {totalAmount}</p>
 			</div>
 
 			{/* Payment Section */}

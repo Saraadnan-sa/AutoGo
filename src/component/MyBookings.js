@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import fetchData from '../utility/fetchData';
 import CarCard from "./CarCard";
@@ -8,17 +8,16 @@ import Spinner from "./Spinner";
 const MyBookings = () => {
 	const [cars, setCars] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
 
 
 	useEffect(() => {
 		const fetchCars = async () => {
 			setLoading(true);
-			const userType = localStorage.getItem('user'); 
-			const token = localStorage.getItem('token'); 
-			console.log(userType, token); 
-			if(!userType || !token)
-			{
+			const userType = localStorage.getItem('user');
+			const token = localStorage.getItem('token');
+			console.log(userType, token);
+			if (!userType || !token) {
 				navigate('/login', { replace: true })
 				toast.error('Invalid email or password', {
 					position: toast.POSITION.TOP_RIGHT,
@@ -29,7 +28,7 @@ const MyBookings = () => {
 					draggable: true,
 					progress: undefined,
 				});
-				return; 
+				return;
 			}
 
 			try {
@@ -41,7 +40,7 @@ const MyBookings = () => {
 				});
 
 				response = await response.json();
-				console.log(response); 
+				console.log(response);
 				setCars(response)
 			} catch (error) {
 				console.error('Error fetching cars:', error);
@@ -66,16 +65,19 @@ const MyBookings = () => {
 					<>
 						<h3 style={{ marginLeft: '30px', color: 'white' }}>Number of Bookings: {cars.length}</h3>
 						{cars.map((car) => (
-							<CarCard
-								key={car._id}
-								id={car._id}
-								image={car.image}
-								carName={car.name}
-								mileage={car.mileage}
-								rate={car.rentperhour}
-								withPetrol={car.withPetrol}
-								driver={car.driver}
-							/>
+							<div className="card mb-3 mx-auto" style={{ maxWidth: "70%", border: '2px solid black', borderRadius: '10px', padding: '30px', color: 'black' }}>
+								<div className="d-flex" style={{justifyContent: 'space-around', margin: '20px 0'}}>
+									<Link to={`/vehicle/${car.car}`} className="btn btn-primary">Listing of Vehicle</Link>
+									<Link className="btn btn-primary" to={`/renter/${car.renter}`}>Renter Profile</Link>
+									<Link className="btn btn-primary" to={`/bill/${car.bill}`}>View Bill</Link>
+
+								</div>
+								<p style={{ color: 'black' }}>Booking From date: {car.startDate}</p>
+								<p style={{ color: 'black' }}>Booking To date: {car.endDate}</p>
+								<p style={{ color: 'black' }}>Booking date: {car.date}</p>
+							</div>
+
+
 						))}
 					</>
 				)

@@ -76,7 +76,7 @@ router.post('/login', [
     const {email, password} = req.body; 
 
     try{
-        let rentee = await Rentee.findOne({email}); 
+        let rentee = await Rentee.findOne({email: email}); 
         if(!rentee)
         {
             return res.status(400).send("Please enter correct credentials"); 
@@ -84,11 +84,11 @@ router.post('/login', [
 
         // comparing passwords (hashed)
 
-        const passwordCompare = await bcrypt.compare(password, Rentee.password); 
+        const passwordCompare = await bcrypt.compare(password, rentee.password); 
 
         if(!passwordCompare)
         {
-            return res.status(400).send("Please enter correct credentials");
+            return res.status(400).send({error: "Please enter correct credentials"});
         }
 
         const data = {
@@ -105,6 +105,20 @@ router.post('/login', [
     {
         res.status(500).send("Internal error occured"); 
     }
+})
+
+router.get('/rentee/:id', async(req, res)=> 
+{
+	const {id} = req.params; 
+	try 
+	{
+		const rentee = await Rentee.findById(id); 
+		res.json(rentee)
+	}
+	catch(error)
+	{
+		res.status(400).send({error: error})
+	}
 })
 
 router.use(verifyToken); 

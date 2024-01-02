@@ -11,6 +11,8 @@ import RenterPage from './Pages/RenterPage';
 import MyBookingsPage from './Pages/MyBookingsPage';
 import RenterCarsPage from './Pages/RenterCarsPage';
 import ProfilePage from './Pages/ProfilePage';
+import BillPage from './Pages/BillPage';
+import ViewBill from './Pages/ViewBill';
 
 function App() {
 	return (
@@ -25,7 +27,9 @@ function App() {
 				<Route path='/aboutUs' exact element={<AboutUs />} />
 				<Route path='/vehicle/:id' exact element={<SingleCarPage />} />
 				<Route path='/profile' exact element={<ProfilePage />} />
+				<Route path='/billing' exact element={<BillPage />} />
 				<Route path='/renter/:id' exact element={< RenterPage />} />
+				<Route path='/bill/:id' exact element={< ViewBill />} />
 				<Route path='/' exact element={<LoginPage />} />
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
